@@ -1,0 +1,19 @@
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 640px;
+  height: 640px;
+  background-size: 10px 10px;
+  background-image:
+    linear-gradient(to right, grey 1px, transparent 1px),
+    linear-gradient(to bottom, grey 1px, transparent 1px);
+  border: 1px solid black;
+  border-left: 0;
+  border-top: 0;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+}
