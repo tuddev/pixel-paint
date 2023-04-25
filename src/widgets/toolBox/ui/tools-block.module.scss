@@ -1,0 +1,29 @@
+.block {
+  width: 100%;
+  max-width: 220px;
+  height: 310px;
+  padding: 10px;
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 8px 16px;
+
+}
+
+.box {
+  width: 100%;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.erase {
+  margin-right: 20px;
+}
+
+.tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}

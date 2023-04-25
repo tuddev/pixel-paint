@@ -1,6 +1,12 @@
-import { MouseEvent, useRef } from "react";
+import { MouseEvent, useEffect, useRef } from "react";
 import styles from "./canvas.module.scss";
-import { drawPixel, isDrawing$, setIsDrawing } from "../model";
+import {
+  canvas$,
+  drawPixel,
+  fillBackground,
+  isDrawing$,
+  setIsDrawing,
+} from "../model";
 import { useStore } from "@nanostores/react";
 
 type TCanvasProps = {
@@ -11,8 +17,15 @@ export const Canvas: React.FC<TCanvasProps> = ({ selectedColor }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useStore(isDrawing$);
 
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    fillBackground(canvasRef.current, "#fff");
+  }, []);
+
   const startDrawing = (event: MouseEvent<HTMLCanvasElement>) => {
     if (!canvasRef.current) return;
+
+    canvas$.set(canvasRef.current);
     const { offsetX, offsetY } = event.nativeEvent;
 
     drawPixel(canvasRef.current, selectedColor, [offsetX, offsetY]);
@@ -44,6 +57,7 @@ export const Canvas: React.FC<TCanvasProps> = ({ selectedColor }) => {
         width={`640px`}
         height={`640px`}
       />
+      <a />
     </div>
   );
 };

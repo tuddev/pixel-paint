@@ -1,9 +1,20 @@
-import { SketchPicker } from "react-color";
+import { ColorResult, SketchPicker } from "react-color";
 import { changePalleteColor, palleteColor$ } from "../model";
 import { useStore } from "@nanostores/react";
+import styles from "./pallete.module.scss";
 
 export const Pallete = () => {
   const color = useStore(palleteColor$);
 
-  return <SketchPicker onChange={changePalleteColor} color={color} />;
+  const handleChangeColor = (color: ColorResult) => {
+    changePalleteColor(color.hex);
+  };
+
+  return (
+    <SketchPicker
+      onChange={handleChangeColor}
+      color={color}
+      className={styles.picker}
+    />
+  );
 };
