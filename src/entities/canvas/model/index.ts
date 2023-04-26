@@ -1,8 +1,23 @@
 import { atom } from "nanostores";
+import { TPixel } from "../../../shared/types";
 
-const PIXEL_SIZE = 10;
-
+export const PIXEL_SIZE = 10;
+const CANVAS_SIZE = 640;
 export const isDrawing$ = atom<boolean>(false);
+
+const PIXELS_ARRAY_INIT: TPixel[] = [];
+
+for (let i = 0; i < CANVAS_SIZE; i += 10) {
+  for (let j = 0; j < CANVAS_SIZE; j += 10) {
+    PIXELS_ARRAY_INIT.push({
+      x: i,
+      y: j,
+      color: "",
+    });
+  }
+}
+
+export const coloredPixels$ = atom<TPixel[]>([]);
 
 export const setIsDrawing = (isDrawing: boolean) => {
   isDrawing$.set(isDrawing);
@@ -10,29 +25,31 @@ export const setIsDrawing = (isDrawing: boolean) => {
 
 export const canvas$ = atom<HTMLCanvasElement | null>(null);
 
-const getCellCoor = (coor: number) =>
+coloredPixels$.listen(() => {
+  const canvas = canvas$.get();
+  if (!canvas) return;
+
+  drawPixel(canvas);
+});
+
+export const getCellCoor = (coor: number) =>
   Math.round(coor / PIXEL_SIZE) * PIXEL_SIZE;
 
-export const drawPixel = (
-  canvas: HTMLCanvasElement,
-  color: string,
-  mouseCoor: [number, number]
-) => {
+export const drawPixel = (canvas: HTMLCanvasElement) => {
   canvas$.set(canvas);
 
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  const x = getCellCoor(mouseCoor[0]);
-  const y = getCellCoor(mouseCoor[1]);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+  for (let { color, x, y } of coloredPixels$.get()) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+  }
 };
 
-export const fillBackground = (canvas: HTMLCanvasElement, color: string) => {
-  const ctx = canvas?.getContext("2d");
-  if (!ctx || !canvas) return;
-  ctx.fillStyle = color;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+export const fillBackground = (color: string) => {
+  const updatePixels = PIXELS_ARRAY_INIT.map((pixel) => ({ ...pixel, color }));
+  coloredPixels$.set(updatePixels);
 };

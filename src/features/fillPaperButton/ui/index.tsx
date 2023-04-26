@@ -2,20 +2,18 @@ import { Button } from "antd";
 import { BgColorsOutlined } from "@ant-design/icons";
 import { useStore } from "@nanostores/react";
 import { palleteColor$ } from "../../../entities/pallete";
-import { canvas$, fillBackground } from "../../../entities/canvas";
+import { fillBackground } from "../../../entities/canvas";
 
-export const FillBackgrondButton = () => {
+export const FillPaperButton = () => {
   const color = useStore(palleteColor$);
-  const canvas = useStore(canvas$);
 
   const handleClick = () => {
-    if (!canvas) return;
-    fillBackground(canvas, color);
+    fillBackground(color);
   };
 
   return (
-    <Button type="dashed" onClick={handleClick}>
-      <BgColorsOutlined /> Fill background
+    <Button onClick={handleClick}>
+      <BgColorsOutlined /> Fill paper
     </Button>
   );
 };
