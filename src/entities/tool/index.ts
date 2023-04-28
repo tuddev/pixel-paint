@@ -1,2 +1,2 @@
-export type { TTool } from "./model";
-export { tools$, currentTool$ } from "./model";
+export type { TTool } from './model';
+export { tools$, currentTool$ } from './model';

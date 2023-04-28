@@ -1,5 +1,5 @@
-import { Button } from "antd";
-import { coloredPixels$ } from "../../../entities/canvas";
+import { Button } from 'antd';
+import { coloredPixels$ } from '../../../entities/canvas';
 
 export const ClearPaintButton = () => {
   const clickClear = () => {

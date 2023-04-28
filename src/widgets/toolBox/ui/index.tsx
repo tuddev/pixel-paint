@@ -1,45 +1,43 @@
-import { useStore } from "@nanostores/react";
-import { Pallete } from "../../../entities";
+import { useStore } from '@nanostores/react';
+import { Pallete } from '../../../entities';
 import {
   ChangeToolSize,
   ClearPaintButton,
   ExportPngButton,
-  FillBackgroundButton,
   FillPaperButton,
-} from "../../../features";
-import styles from "./tools-block.module.scss";
-import { currentTool$, tools$ } from "../../../entities/tool";
-import { Button } from "antd";
+} from '../../../features';
+import styles from './tools-block.module.scss';
+import { currentTool$, tools$ } from '../../../entities/tool';
+import { Button } from 'antd';
+import { pixelSize$ } from '../../../features/changeToolSize';
+import { type ReactNode } from 'react';
 
-export const ToolBox = () => {
+export const ToolBox = (): ReactNode => {
   const tools = useStore(tools$);
+  const pixelSize = useStore(pixelSize$);
+
   return (
     <div className={styles.box}>
       <Pallete />
       <div className={styles.block}>
         <div className={styles.tools}>
           {tools.map((tool) => {
-            if (tool.type === "erase")
-              return (
-                <Button
-                  danger
-                  onClick={() => currentTool$.set(tool)}
-                  key={tool.type}
-                >
-                  {tool.type}
-                </Button>
-              );
             return (
-              <Button key={tool.type} onClick={() => currentTool$.set(tool)}>
+              <Button
+                danger={tool.type === 'erase'}
+                onClick={() => {
+                  currentTool$.set({ ...tool, size: pixelSize });
+                }}
+                key={tool.type}
+              >
                 {tool.type}
               </Button>
             );
           })}
-          <ExportPngButton />
           <ChangeToolSize />
           <FillPaperButton />
-          <FillBackgroundButton />
           <ClearPaintButton />
+          <ExportPngButton />
         </div>
       </div>
     </div>

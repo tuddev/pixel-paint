@@ -1,61 +1,50 @@
-import { atom } from "nanostores";
-import { TPixel } from "../../../shared/types";
-import { PIXEL_SIZE } from "../../canvas";
+import { atom } from 'nanostores';
+import { type TPixel } from '../../../shared/types';
+import { PIXEL_SIZE } from '../../canvas';
 
-export type TTool = {
+export interface TTool {
   paint: (x: number, y: number, color: string) => TPixel[];
   size: number;
   type: string;
+}
+
+const getCoeffForEvenSize = (size: number) => {
+  const k = size % 2 === 0 ? 1 : 0;
+  return 10 * k - 10;
 };
 
 const Pen: TTool = {
   paint: function (x, y, color) {
-    let array: TPixel[] = [];
-    const k = this.size % 2 === 0 ? 1 : 0;
-    const coeffForEvenSize = 5 * k - 10;
+    const array: TPixel[] = [];
+    const coeffForEvenSize = getCoeffForEvenSize(this.size);
 
-    for (let i = 0; i < this.size / 2; i += 0.5) {
-      for (let j = 0; j < this.size / 2; j += 0.5) {
-        array.push(
-          {
-            x: x + i * PIXEL_SIZE + coeffForEvenSize,
-            y: y + j * PIXEL_SIZE + coeffForEvenSize,
-            color,
-          },
-          {
-            x: x - i * PIXEL_SIZE + coeffForEvenSize,
-            y: y - j * PIXEL_SIZE + coeffForEvenSize,
-            color,
-          },
-          {
-            x: x + i * PIXEL_SIZE + coeffForEvenSize,
-            y: y - j * PIXEL_SIZE + coeffForEvenSize,
-            color,
-          },
-          {
-            x: x - i * PIXEL_SIZE + coeffForEvenSize,
-            y: y + j * PIXEL_SIZE + coeffForEvenSize,
-            color,
-          }
-        );
+    for (let i = 0; i < this.size; i += 1) {
+      for (let j = 0; j < this.size; j += 1) {
+        array.push({
+          x: x + i * PIXEL_SIZE + coeffForEvenSize,
+          y: y + j * PIXEL_SIZE + coeffForEvenSize,
+          color,
+        });
       }
     }
 
     return array;
   },
   size: 1,
-  type: "pen",
+  type: 'pen',
 };
 
 const Erase: TTool = {
   paint: function (x, y) {
-    let array: TPixel[] = [];
-    for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j < this.size; j++) {
+    const array: TPixel[] = [];
+    const coeffForEvenSize = getCoeffForEvenSize(this.size);
+
+    for (let i = 0; i < this.size; i += 1) {
+      for (let j = 0; j < this.size; j += 1) {
         array.push({
-          x: x + i * PIXEL_SIZE,
-          y: y + j * PIXEL_SIZE,
-          color: "",
+          x: x + i * PIXEL_SIZE + coeffForEvenSize,
+          y: y + j * PIXEL_SIZE + coeffForEvenSize,
+          color: '',
           isErased: true,
         });
       }
@@ -63,7 +52,7 @@ const Erase: TTool = {
     return array;
   },
   size: 1,
-  type: "erase",
+  type: 'erase',
 };
 
 export const currentTool$ = atom<TTool | null>(Pen);

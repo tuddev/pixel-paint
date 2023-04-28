@@ -1,1 +1,1 @@
-export { ClearPaintButton } from "./ui";
+export { ClearPaintButton } from './ui';

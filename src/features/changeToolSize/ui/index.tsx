@@ -1,8 +1,8 @@
-import { Col, Row, Slider, Typography } from "antd";
-import { atom } from "nanostores";
-import styles from "./change-tool-size.module.scss";
-import { useStore } from "@nanostores/react";
-import { currentTool$ } from "../../../entities/tool";
+import { Col, Row, Slider, Typography } from 'antd';
+import { atom } from 'nanostores';
+import styles from './change-tool-size.module.scss';
+import { useStore } from '@nanostores/react';
+import { currentTool$ } from '../../../entities/tool';
 
 export const pixelSize$ = atom<number>(1);
 
@@ -10,18 +10,20 @@ const { Text } = Typography;
 
 export const ChangeToolSize = () => {
   const pixelSize = useStore(pixelSize$);
-
+  const currentTool = useStore(currentTool$);
   const hadleChange = (size: number) => {
     pixelSize$.set(size);
-    currentTool$.set({
-      ...currentTool$.get()!,
-      size: pixelSize$.get(),
-    });
+    if (currentTool != null) {
+      currentTool$.set({
+        ...currentTool,
+        size: pixelSize,
+      });
+    }
   };
 
   return (
     <Row className={styles.container}>
-      <Text strong>{`Pixel size (${pixelSize$.get()})`}</Text>
+      <Text strong>{`Pixel size: ${pixelSize}`}</Text>
       <Col span={12}>
         <Slider
           min={1}

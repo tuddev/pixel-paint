@@ -1,8 +1,8 @@
-import { Button } from "antd";
-import { BgColorsOutlined } from "@ant-design/icons";
-import { useStore } from "@nanostores/react";
-import { palleteColor$ } from "../../../entities/pallete";
-import { fillBackground } from "../../../entities/canvas";
+import { Button } from 'antd';
+import { BgColorsOutlined } from '@ant-design/icons';
+import { useStore } from '@nanostores/react';
+import { palleteColor$ } from '../../../entities/pallete';
+import { fillBackground } from '../../../entities/canvas';
 
 export const FillPaperButton = () => {
   const color = useStore(palleteColor$);

@@ -1,21 +1,22 @@
-import { MouseEvent, useRef } from "react";
-import styles from "./canvas.module.scss";
-import { canvas$, isDrawing$, setIsDrawing } from "../model";
-import { useStore } from "@nanostores/react";
-import { drawByTool } from "../../../features/drawByTool/model";
+import { type MouseEvent, useRef, useEffect } from 'react';
+import styles from './canvas.module.scss';
+import { canvas$, isDrawing$, setIsDrawing } from '../model';
+import { useStore } from '@nanostores/react';
+import { drawByTool } from '../../../features/drawByTool/model';
 
-type TCanvasProps = {
+interface TCanvasProps {
   selectedColor: string;
-};
+}
 
 export const Canvas: React.FC<TCanvasProps> = ({ selectedColor }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useStore(isDrawing$);
 
-  const startDrawing = (event: MouseEvent<HTMLCanvasElement>) => {
-    if (!canvasRef.current) return;
-
+  useEffect(() => {
     canvas$.set(canvasRef.current);
+  }, [canvasRef.current]);
+
+  const startDrawing = (event: MouseEvent<HTMLCanvasElement>) => {
     const { offsetX, offsetY } = event.nativeEvent;
     drawByTool(selectedColor, [offsetX, offsetY]);
     setIsDrawing(true);
@@ -26,7 +27,6 @@ export const Canvas: React.FC<TCanvasProps> = ({ selectedColor }) => {
   };
 
   const handleMouseMove = (event: MouseEvent<HTMLCanvasElement>) => {
-    if (!canvasRef.current) return;
     const { offsetX, offsetY } = event.nativeEvent;
 
     if (isDrawing) {
@@ -42,8 +42,8 @@ export const Canvas: React.FC<TCanvasProps> = ({ selectedColor }) => {
         onMouseUp={endDrawing}
         onMouseMove={handleMouseMove}
         ref={canvasRef}
-        width={`640px`}
-        height={`640px`}
+        width={'640px'}
+        height={'640px'}
       />
       <a />
     </div>

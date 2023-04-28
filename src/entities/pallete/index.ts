@@ -1,2 +1,2 @@
-export { Pallete } from "./ui";
-export { palleteColor$, changePalleteColor } from "./model";
+export { Pallete } from './ui';
+export { palleteColor$, changePalleteColor } from './model';

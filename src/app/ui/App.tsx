@@ -1,12 +1,8 @@
-import { IndexPage } from "../../pages/index";
-import "./styles.scss";
+import { IndexPage } from '../../pages/index';
+import './styles.scss';
 
 function App() {
-  return (
-    <div className="App">
-      <IndexPage />
-    </div>
-  );
+  return <IndexPage />;
 }
 
 export default App;
