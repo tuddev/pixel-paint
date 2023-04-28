@@ -10,9 +10,8 @@ import styles from './tools-block.module.scss';
 import { currentTool$, tools$ } from '../../../entities/tool';
 import { Button } from 'antd';
 import { pixelSize$ } from '../../../features/changeToolSize';
-import { type ReactNode } from 'react';
 
-export const ToolBox = (): ReactNode => {
+export const ToolBox = () => {
   const tools = useStore(tools$);
   const pixelSize = useStore(pixelSize$);
 
