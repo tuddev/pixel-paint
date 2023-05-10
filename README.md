@@ -1,16 +1,16 @@
 # Pixel Paint
 
-## О проекте
+## About
 
-Pixel Point - это реализация приложения для рисования pixel-артов. В проекте есть следующие возможности:
+Pixel Point -  is an implementation of a pixel art drawing application. The project has the following features:
 
-- выбор цвета кисти
-- изменение размера кисти и ластика
-- очистка листа
-- заливка листа одним цветом
-- скачивание рисунка в png
+- brush color selection
+- change the size of the brush and eraser
+- sheet cleaning
+- fill sheet with one color
+- download picture in png
 
-## Сделано с использованием
+## Powered by and tools
 
 - Node v16.14.2
 - TypeScript
@@ -27,22 +27,22 @@ Pixel Point - это реализация приложения для рисов
 
 ## Getting started
 
-### Скачивание репозитория
+### Download
 
 `git clone https://github.com/tuddev/pixel-paint.git`
 
-### Установка зависимостей
+### Installing dependencies
 
 `yarn`
 
-### Запуск проекта
+### Launch
 
 `yarn start`
 
-## Что можно добавить
+## What can be added
 
-- сохранение рисунка в localStorage для возможности продолжить рисование спустя время
-- разные варианты кистей
-- layout с меню
-- возможность создавать слои
-- выгрузка рисунка с возможностью выбрать тип фона: прозрачный, белый или черный
+- saving the drawing in localStorage so that you can continue drawing after a while
+- different types of brushes
+- layout with menu
+- the ability to create layers
+- uploading a picture with the ability to select the type of background: transparent, white or black
